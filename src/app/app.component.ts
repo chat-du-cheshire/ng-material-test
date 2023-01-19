@@ -1,19 +1,16 @@
-import {Component} from '@angular/core';
-import {EmployeesApi} from './api/employees.api';
-import {TimingsApi} from './api/timings.api';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {StateService} from './services/state.service';
+import {AppService} from './services/app.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-    title = 'ng-material-test';
-    constructor(
-        private readonly employeesApi: EmployeesApi,
-        private readonly timingsApi: TimingsApi,
-    ) {
-        this.employeesApi.get().subscribe(res => console.log('employees', res));
-        this.timingsApi.get().subscribe(res => console.log('timings', res));
+    readonly employees$ = this.store.select(store => store.storage.getAllEmployees());
+    constructor(private readonly store: StateService, private readonly app: AppService) {
+        this.app.loadData();
     }
 }
