@@ -27,15 +27,17 @@ export class Storage {
     }
 
     getEmployee(id: IEmployeeDto['id']) {
-        return this.employees.get(id);
+        return this.employees.get(id) ?? null;
     }
 
     getTiming(id: ITimingDto['id']) {
-        return this.timings.get(id);
+        return this.timings.get(id) ?? null;
     }
 
     getEmployeeTiming(id: IEmployeeDto['id']) {
-        return this.employeeTimings.get(id);
+        return Array.from(this.employeeTimings.get(id)?.values() ?? []).map(
+            id => this.getTiming(id)!,
+        );
     }
 }
 
