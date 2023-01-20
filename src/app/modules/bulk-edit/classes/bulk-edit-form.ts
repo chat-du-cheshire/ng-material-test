@@ -1,4 +1,4 @@
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {IBulkEditData, TypedGroup} from '../types/types';
 import {IEmployeeDto, ITimingDto} from '../../../types/dto';
 
@@ -59,9 +59,13 @@ export class EmployeeEditForm extends FormGroup<TypedGroup<Omit<IEmployeeDto, 'e
     constructor(employee: IEmployeeDto) {
         super({
             id: new FormControl(employee.id),
-            name: new FormControl(employee.name),
-            hourlyRate: new FormControl(employee.hourlyRate),
-            hourlyRateOvertime: new FormControl(employee.hourlyRateOvertime),
+            name: new FormControl(employee.name, {validators: [Validators.required]}),
+            hourlyRate: new FormControl(employee.hourlyRate, {
+                validators: Validators.min(1),
+            }),
+            hourlyRateOvertime: new FormControl(employee.hourlyRateOvertime, {
+                validators: Validators.min(1),
+            }),
         });
     }
 }
