@@ -6,6 +6,7 @@ import {MatCardModule} from '@angular/material/card';
 import {SecToTimePipe} from './pipes/sec-to-time.pipe';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     declarations: [DashboardComponent, SecToTimePipe],
@@ -16,6 +17,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatCardModule,
         MatTableModule,
         MatCheckboxModule,
+        MatButtonModule,
     ],
 })
 export class DashboardModule {}
