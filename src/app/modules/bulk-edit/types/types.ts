@@ -7,5 +7,5 @@ export interface IBulkEditData {
 }
 
 export type TypedGroup<T extends object> = {
-    [K in keyof T]: T[K] extends any[] ? FormArray : AbstractControl<T[K] | null>;
+    [K in keyof T]: T[K] extends unknown[] ? FormArray : AbstractControl<T[K] | null>;
 };

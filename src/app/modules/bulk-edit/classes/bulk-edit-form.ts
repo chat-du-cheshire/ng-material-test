@@ -36,13 +36,18 @@ export class EmployeeEditForm extends FormGroup<TypedGroup<Omit<IEmployeeDto, 'e
 }
 
 export class TimingEditForm extends FormGroup<
-    TypedGroup<Omit<ITimingDto, 'employeeId'>>
+    TypedGroup<
+        Omit<ITimingDto, 'employeeId' | 'clockIn' | 'clockOut'> & {
+            clockIn: Date;
+            clockOut: Date;
+        }
+    >
 > {
     constructor(timing: ITimingDto) {
         super({
             id: new FormControl(timing.id),
-            clockIn: new FormControl(timing.clockIn),
-            clockOut: new FormControl(timing.clockOut),
+            clockIn: new FormControl(new Date(timing.clockIn)),
+            clockOut: new FormControl(new Date(timing.clockOut)),
         });
     }
 }

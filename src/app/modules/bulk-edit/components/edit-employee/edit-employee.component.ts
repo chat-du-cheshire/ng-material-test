@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {EditForm} from '../../classes/bulk-edit-form';
 
 @Component({
     selector: 'app-edit-employee',
@@ -8,5 +8,5 @@ import {FormGroup} from '@angular/forms';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditEmployeeComponent {
-    @Input() form!: FormGroup;
+    @Input() form!: EditForm;
 }

@@ -2,7 +2,10 @@
 <div mat-dialog-content>
   <form [formGroup]="form">
     <ng-container formArrayName="items">
-       <app-edit-employee *ngFor="let dataForm of form.controls.items.controls" [form]="dataForm.controls.employee"></app-edit-employee>
+      <ng-container *ngFor="let dataForm of form.controls.items.controls">
+        <app-edit-employee  [form]="dataForm"></app-edit-employee>
+        <app-edit-timings [form]="dataForm"></app-edit-timings>
+      </ng-container>
     </ng-container>
   </form>
 </div>

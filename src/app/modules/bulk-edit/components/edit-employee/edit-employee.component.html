@@ -1,14 +1,16 @@
 <div class="form-group" [formGroup]="form">
-  <mat-form-field class="form-field">
-    <mat-label>Name</mat-label>
-    <input matInput type="text" formControlName="name">
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Email</mat-label>
-    <input matInput type="text" formControlName="hourlyRate">
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Name</mat-label>
-    <input matInput type="text" formControlName="hourlyRateOvertime">
-  </mat-form-field>
+  <ng-container formGroupName="employee">
+    <mat-form-field class="form-field">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" formControlName="hourlyRate">
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="hourlyRateOvertime">
+    </mat-form-field>
+  </ng-container>
 </div>

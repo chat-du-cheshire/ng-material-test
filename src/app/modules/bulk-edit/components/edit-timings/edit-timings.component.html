@@ -1,0 +1,18 @@
+<div class="timings" [formGroup]="form">
+  <ng-container formArrayName="timings">
+    <ng-container *ngFor="let group of form.controls.timings.controls; let i = index">
+      <div [formGroupName]="i" class="timing">
+        <mat-form-field class="time-picker">
+          <input matInput [ngxMatDatetimePicker]="pickerIn" placeholder="Choose a date" formControlName="clockIn">
+          <mat-datepicker-toggle matSuffix [for]="$any(pickerIn)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerIn [showSeconds]="true"></ngx-mat-datetime-picker>
+        </mat-form-field>
+        <mat-form-field class="time-picker">
+          <input matInput [ngxMatDatetimePicker]="pickerOut" placeholder="Choose a date" formControlName="clockOut">
+          <mat-datepicker-toggle matSuffix [for]="$any(pickerOut)"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerOut [showSeconds]="true"></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
