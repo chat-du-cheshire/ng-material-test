@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {StateService} from './services/state.service';
 import {AppService} from './services/app.service';
-import {map} from 'rxjs';
+import {map, startWith} from 'rxjs';
 import {EmployeeMeta} from './classes/employee-meta';
 
 @Component({
@@ -25,6 +25,7 @@ export class AppComponent {
                             ),
                     );
             }),
+            startWith([]),
         );
     constructor(private readonly store: StateService, private readonly app: AppService) {
         this.app.loadData();

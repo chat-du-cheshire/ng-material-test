@@ -1,0 +1,19 @@
+<div class="stats">
+  <mat-card class="stat">
+    <mat-card-header><mat-card-title>Total Employees</mat-card-title></mat-card-header>
+    <mat-card-content ><div class="count"><strong>{{totalEmployees}}</strong></div></mat-card-content>
+  </mat-card>
+  <mat-card class="stat">
+    <mat-card-header><mat-card-title>Total clocked in time</mat-card-title></mat-card-header>
+    <mat-card-content ><div class="count"><strong>{{totalClockedInTime | secToTime}}</strong></div></mat-card-content>
+  </mat-card>
+  <mat-card class="stat">
+    <mat-card-header><mat-card-title>Total paid regular</mat-card-title></mat-card-header>
+    <mat-card-content ><div class="count"><strong>{{totalPaidRegular | number: '.2-2'}}</strong></div></mat-card-content>
+  </mat-card>
+  <mat-card class="stat">
+    <mat-card-header><mat-card-title>Total paid overtime</mat-card-title></mat-card-header>
+    <mat-card-content ><div class="count"><strong>{{totalPaidOvertime | number:'.2-2'}}</strong></div></mat-card-content>
+  </mat-card>
+</div>
+

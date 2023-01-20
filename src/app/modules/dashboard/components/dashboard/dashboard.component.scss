@@ -1,0 +1,15 @@
+.stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  flex: 1 1 auto;
+}
+
+.count {
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  font-size: 3rem;
+}

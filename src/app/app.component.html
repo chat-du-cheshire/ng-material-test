@@ -1,4 +1,3 @@
 <div class="container">
-
-  <pre>{{employees$|async|json}}</pre>
+  <app-dashboard [items]="(employees$|async)!"></app-dashboard>
 </div>
