@@ -14,6 +14,9 @@ export class EditForm extends FormGroup<{
     employee: EmployeeEditForm;
     timings: FormArray<TimingEditForm>;
 }> {
+    private readonly employeeControl = this.controls.employee;
+    private readonly timingsControl = this.controls.timings;
+
     constructor(data: IBulkEditData) {
         super({
             employee: new EmployeeEditForm(data.employee),
@@ -21,6 +24,34 @@ export class EditForm extends FormGroup<{
                 data.timings.map(timing => new TimingEditForm(timing)),
             ),
         });
+    }
+
+    getChangedValues(): Partial<IBulkEditData> | null {
+        const employeeDirty = this.employeeControl.dirty;
+        const timingDirty = this.timingsControl.dirty;
+
+        if (!employeeDirty && !timingDirty) {
+            return null;
+        }
+
+        const employeeValue = employeeDirty ? {employee: this.employeeControl.value} : {};
+        const timingsValue = timingDirty
+            ? {
+                  timings: this.timingsControl.controls
+                      .filter(control => control.dirty)
+                      .map(control => {
+                          const {id, clockIn, clockOut} = control.value;
+
+                          return {
+                              id,
+                              clockIn: clockIn?.toISOString(),
+                              clockOut: clockOut?.toISOString(),
+                          };
+                      }),
+              }
+            : {};
+
+        return Object.assign(employeeValue, timingsValue) as Partial<IBulkEditData>;
     }
 }
 
@@ -35,14 +66,12 @@ export class EmployeeEditForm extends FormGroup<TypedGroup<Omit<IEmployeeDto, 'e
     }
 }
 
-export class TimingEditForm extends FormGroup<
-    TypedGroup<
-        Omit<ITimingDto, 'employeeId' | 'clockIn' | 'clockOut'> & {
-            clockIn: Date;
-            clockOut: Date;
-        }
-    >
-> {
+type TTimingFormValue = Omit<ITimingDto, 'employeeId' | 'clockIn' | 'clockOut'> & {
+    clockIn: Date;
+    clockOut: Date;
+};
+
+export class TimingEditForm extends FormGroup<TypedGroup<TTimingFormValue>> {
     constructor(timing: ITimingDto) {
         super({
             id: new FormControl(timing.id),

@@ -23,12 +23,35 @@ export class Storage {
         return new Storage({employees: [], timings: []});
     }
 
+    static fromExisting(storage: Storage) {
+        return new Storage({
+            employees: storage.getAllEmployees(),
+            timings: storage.getAllTimings(),
+        });
+    }
+
     getAllEmployees() {
         return Array.from(this.employees.values());
     }
 
     getEmployee(id: IEmployeeDto['id']) {
         return this.employees.get(id) ?? null;
+    }
+
+    updateEmployee(employee: Partial<IEmployeeDto>) {
+        const current = this.employees.get(employee.id!)!;
+
+        this.employees.set(employee.id!, {...current, ...employee});
+    }
+
+    updateTiming(timing: Partial<ITimingDto>) {
+        const current = this.timings.get(timing.id!)!;
+
+        this.timings.set(timing.id!, {...current, ...timing});
+    }
+
+    getAllTimings() {
+        return Array.from(this.timings.values());
     }
 
     getTiming(id: ITimingDto['id']) {

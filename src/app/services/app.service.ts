@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {StateService} from './state.service';
 import {EmployeesApi} from '../api/employees.api';
 import {TimingsApi} from '../api/timings.api';
-import {forkJoin, map, startWith, take} from 'rxjs';
+import {forkJoin, map, startWith, switchMap, take} from 'rxjs';
 import {EmployeeMeta} from '../modules/dashboard/models/employee-meta';
 import {MatDialog} from '@angular/material/dialog';
 import {BulkEditDialogComponent} from '../modules/bulk-edit/components/bulk-edit-dialog/bulk-edit-dialog.component';
@@ -46,10 +46,16 @@ export class AppService {
             .pipe(
                 take(1),
                 map(storage => this.prepareData(storage, employeeIds)),
+                switchMap(data =>
+                    this.matDialog.open(BulkEditDialogComponent, {data}).beforeClosed(),
+                ),
             )
-            .subscribe(data => {
-                this.matDialog.open(BulkEditDialogComponent, {data});
-            });
+            .subscribe(({employee, timings}) =>
+                this.store.update({
+                    employees: employee ? [employee] : [],
+                    timings: timings ?? [],
+                }),
+            );
     }
 
     private prepareData(storage: Storage, employeeIds: string[]): IBulkEditData[] {

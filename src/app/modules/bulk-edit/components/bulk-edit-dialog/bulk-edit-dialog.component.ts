@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {IBulkEditData} from '../../types/types';
 import {BulkEditForm} from '../../classes/bulk-edit-form';
 
@@ -11,5 +11,18 @@ import {BulkEditForm} from '../../classes/bulk-edit-form';
 })
 export class BulkEditDialogComponent {
     form = new BulkEditForm(this.data);
-    constructor(@Inject(MAT_DIALOG_DATA) public data: IBulkEditData[]) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: IBulkEditData[],
+        private readonly dialogRef: MatDialogRef<BulkEditDialogComponent>,
+    ) {}
+
+    onSubmit() {
+        if (this.form.valid) {
+            const values = this.form.controls.items.controls.map(control =>
+                control.getChangedValues(),
+            );
+
+            this.dialogRef.close(values);
+        }
+    }
 }

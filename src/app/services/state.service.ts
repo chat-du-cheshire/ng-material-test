@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {IStorageInit, Storage} from '../classes/storage';
 import {BehaviorSubject, distinctUntilChanged, map} from 'rxjs';
+import {IEmployeeDto, ITimingDto} from '../types/dto';
 
 interface IState {
     status: 'idle' | 'loading' | 'loaded';
@@ -27,6 +28,15 @@ export class StateService {
 
     select<R>(mapFn: (state: IState) => R) {
         return this.store.pipe(map(mapFn), distinctUntilChanged());
+    }
+
+    update(data: {employees: IEmployeeDto[]; timings: ITimingDto[]}) {
+        const newStorage = Storage.fromExisting(this.state.storage);
+
+        data.employees.forEach(e => newStorage.updateEmployee(e));
+        data.timings.forEach(t => newStorage.updateTiming(t));
+
+        this.updateState({storage: newStorage});
     }
     private updateState(value: Partial<IState>) {
         this.store.next({...this.state, ...value});

@@ -13,6 +13,7 @@ import {
     NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
     declarations: [BulkEditDialogComponent, EditEmployeeComponent, EditTimingsComponent],
@@ -26,6 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         NgxMatTimepickerModule,
         NgxMatNativeDateModule,
         NgxMatDatetimePickerModule,
+        MatButtonModule,
     ],
 })
 export class BulkEditModule {}
