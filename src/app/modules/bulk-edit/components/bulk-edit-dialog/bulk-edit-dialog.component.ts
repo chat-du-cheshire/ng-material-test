@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {IBulkEditData} from '../../types/types';
+import {BulkEditForm} from '../../classes/bulk-edit-form';
 
 @Component({
     selector: 'app-bulk-edit-dialog',
@@ -8,5 +10,6 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BulkEditDialogComponent {
-    constructor(@Inject(MAT_DIALOG_DATA) public data: string[]) {}
+    form = new BulkEditForm(this.data);
+    constructor(@Inject(MAT_DIALOG_DATA) public data: IBulkEditData[]) {}
 }
