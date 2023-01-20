@@ -1,14 +1,14 @@
 import {IEmployeeDto, ITimingDto} from '../types/dto';
 import {getSecondsFromDate} from '../utils/helpers';
-import {DAILY_SHIFT} from '../utils/constants';
+import {DAILY_SHIFT, HOUR_IN_SEC} from '../utils/constants';
 
 export class EmployeeMeta {
     readonly employeeId;
     readonly name;
     readonly email;
-    readonly inTime: number;
+    readonly regularTime: number;
     readonly totalTime: number;
-    readonly paidInTime: number;
+    readonly paidRegular: number;
     readonly paidOverTime: number;
     private readonly dailyHours = new Map<string, number>();
 
@@ -17,15 +17,16 @@ export class EmployeeMeta {
         this.name = employee.name;
         this.email = employee.email;
 
-        this.fillDailyHours(timings[0]);
         timings.forEach(timing => this.fillDailyHours(timing));
-        this.inTime = this.getInTime();
+        this.regularTime = this.getRegularTime();
         this.totalTime = this.getTotalTime();
-        this.paidInTime = this.inTime * employee.hourlyRate;
-        this.paidOverTime = (this.totalTime - this.inTime) * employee.hourlyRateOvertime;
+        this.paidRegular = (this.regularTime / HOUR_IN_SEC) * employee.hourlyRate;
+        this.paidOverTime =
+            ((this.totalTime - this.regularTime) / HOUR_IN_SEC) *
+            employee.hourlyRateOvertime;
     }
 
-    private getInTime(): number {
+    private getRegularTime(): number {
         return Array.from(this.dailyHours.values()).reduce(
             (res, t) => res + Math.min(t, DAILY_SHIFT),
             0,
