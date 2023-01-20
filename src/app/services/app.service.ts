@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {StateService} from './state.service';
 import {EmployeesApi} from '../api/employees.api';
 import {TimingsApi} from '../api/timings.api';
-import {forkJoin, map, startWith, switchMap, take} from 'rxjs';
+import {forkJoin, map, startWith, take} from 'rxjs';
 import {EmployeeMeta} from '../modules/dashboard/models/employee-meta';
 import {MatDialog} from '@angular/material/dialog';
 import {BulkEditDialogComponent} from '../modules/bulk-edit/components/bulk-edit-dialog/bulk-edit-dialog.component';

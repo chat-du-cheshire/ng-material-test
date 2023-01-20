@@ -26,6 +26,7 @@ export class DashboardComponent {
         'paidOverTime',
     ];
     readonly selection = new SelectionModel<string>(true, []);
+
     get totalEmployees() {
         return this.items.length;
     }
@@ -42,17 +43,17 @@ export class DashboardComponent {
         return this.items.reduce((res, item) => res + item.paidOverTime, 0);
     }
 
-    /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
         const numSelected = this.selection.selected.length;
         const numRows = this.items.length;
+
         return numSelected === numRows;
     }
 
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
     toggleAllRows() {
         if (this.isAllSelected()) {
             this.selection.clear();
+
             return;
         }
 
