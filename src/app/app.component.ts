@@ -1,8 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {StateService} from './services/state.service';
 import {AppService} from './services/app.service';
-import {map, startWith} from 'rxjs';
-import {EmployeeMeta} from './classes/employee-meta';
 
 @Component({
     selector: 'app-root',
@@ -11,23 +8,12 @@ import {EmployeeMeta} from './classes/employee-meta';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-    readonly employees$ = this.store
-        .select(store => store.storage)
-        .pipe(
-            map(storage => {
-                return storage
-                    .getAllEmployees()
-                    .map(
-                        employee =>
-                            new EmployeeMeta(
-                                employee,
-                                storage.getEmployeeTiming(employee.id),
-                            ),
-                    );
-            }),
-            startWith([]),
-        );
-    constructor(private readonly store: StateService, private readonly app: AppService) {
+    readonly employees$ = this.app.employees$;
+    constructor(private readonly app: AppService) {
         this.app.loadData();
+    }
+
+    bulkEdit(employeeIds: string[]) {
+        this.app.bulkEdit(employeeIds);
     }
 }

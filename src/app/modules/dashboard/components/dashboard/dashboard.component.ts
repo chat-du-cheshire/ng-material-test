@@ -5,7 +5,7 @@ import {
     Input,
     Output,
 } from '@angular/core';
-import {EmployeeMeta} from '../../../../classes/employee-meta';
+import {EmployeeMeta} from '../../models/employee-meta';
 import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({

@@ -1,6 +1,6 @@
-import {IEmployeeDto, ITimingDto} from '../types/dto';
-import {getSecondsFromDate} from '../utils/helpers';
-import {DAILY_SHIFT, HOUR_IN_SEC} from '../utils/constants';
+import {IEmployeeDto, ITimingDto} from '../../../types/dto';
+import {getSecondsFromDate} from '../../../utils/helpers';
+import {DAILY_SHIFT, HOUR_IN_SEC} from '../../../utils/constants';
 
 export class EmployeeMeta {
     readonly employeeId;
