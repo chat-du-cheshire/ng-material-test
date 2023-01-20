@@ -11,6 +11,7 @@ export class Storage {
         config.employees.forEach(employee => this.employees.set(employee.id, employee));
         config.timings.forEach(timing => {
             this.timings.set(timing.id, timing);
+
             if (!this.employeeTimings.has(timing.employeeId)) {
                 this.employeeTimings.set(timing.employeeId, new Set());
             }

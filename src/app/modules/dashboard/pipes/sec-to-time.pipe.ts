@@ -8,6 +8,7 @@ export class SecToTimePipe implements PipeTransform {
         const hours = Math.floor(timeInSeconds / 3600);
         const minutes = Math.floor((timeInSeconds % 3600) / 60);
         const seconds = timeInSeconds % 60;
+
         return `${addLeadingZero(hours)}:${addLeadingZero(minutes)}:${addLeadingZero(
             seconds,
         )}`;

@@ -55,6 +55,7 @@ export class EmployeeMeta {
         const dateInSec = getSecondsFromDate(new Date(clockIn));
         const dateOutSec = getSecondsFromDate(new Date(clockOut));
         const existingSec = this.dailyHours.get(day) ?? 0;
+
         this.dailyHours.set(day, existingSec + dateOutSec - dateInSec);
     }
 }
