@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IStorageInit, Storage} from '../classes/storage';
-import {BehaviorSubject, distinctUntilChanged, map} from 'rxjs';
+import {BehaviorSubject, distinctUntilChanged, map, shareReplay} from 'rxjs';
 import {IEmployeeDto, ITimingDto} from '../types/dto';
 
 interface IState {
@@ -27,10 +27,11 @@ export class StateService {
     }
 
     select<R>(mapFn: (state: IState) => R) {
-        return this.store.pipe(map(mapFn), distinctUntilChanged());
+        return this.store.pipe(map(mapFn), distinctUntilChanged(), shareReplay(1));
     }
 
     update(data: {employees: IEmployeeDto[]; timings: ITimingDto[]}) {
+        console.log(data);
         const newStorage = Storage.fromExisting(this.state.storage);
 
         data.employees.forEach(e => newStorage.updateEmployee(e));

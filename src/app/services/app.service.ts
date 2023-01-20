@@ -2,22 +2,26 @@ import {Injectable} from '@angular/core';
 import {StateService} from './state.service';
 import {EmployeesApi} from '../api/employees.api';
 import {TimingsApi} from '../api/timings.api';
-import {forkJoin, map, startWith, switchMap, take} from 'rxjs';
+import {forkJoin, map, shareReplay, startWith, switchMap, take, tap} from 'rxjs';
 import {EmployeeMeta} from '../modules/dashboard/models/employee-meta';
 import {MatDialog} from '@angular/material/dialog';
 import {BulkEditDialogComponent} from '../modules/bulk-edit/components/bulk-edit-dialog/bulk-edit-dialog.component';
 import {Storage} from '../classes/storage';
 import {IBulkEditData} from '../modules/bulk-edit/types/types';
+import {IEmployeeDto} from '../types/dto';
 
 @Injectable({providedIn: 'root'})
 export class AppService {
-    private readonly storage$ = this.store.select(store => store.storage);
+    private readonly storage$ = this.store
+        .select(store => store.storage)
+        .pipe(shareReplay(1));
+
     readonly employees$ = this.storage$.pipe(
         map(storage => {
             return storage
                 .getAllEmployees()
                 .map(
-                    employee =>
+                    (employee: IEmployeeDto) =>
                         new EmployeeMeta(
                             employee,
                             storage.getEmployeeTiming(employee.id),
@@ -25,6 +29,7 @@ export class AppService {
                 );
         }),
         startWith([]),
+        tap(console.log),
     );
 
     constructor(
@@ -50,12 +55,12 @@ export class AppService {
                     this.matDialog.open(BulkEditDialogComponent, {data}).beforeClosed(),
                 ),
             )
-            .subscribe(({employee, timings}) =>
+            .subscribe((changes: IBulkEditData[]) => {
                 this.store.update({
-                    employees: employee ? [employee] : [],
-                    timings: timings ?? [],
-                }),
-            );
+                    employees: changes.map(({employee}) => employee).filter(Boolean),
+                    timings: changes.map(({timings}) => timings ?? []).flat(),
+                });
+            });
     }
 
     private prepareData(storage: Storage, employeeIds: string[]): IBulkEditData[] {
