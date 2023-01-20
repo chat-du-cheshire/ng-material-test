@@ -10,6 +10,13 @@ import {EmployeeMeta} from '../../../../classes/employee-meta';
 export class DashboardComponent {
     @Input() items: EmployeeMeta[] = [];
 
+    readonly displayedColumns = [
+        'name',
+        'email',
+        'totalTime',
+        'paidRegular',
+        'paidOverTime',
+    ];
     get totalEmployees() {
         return this.items.length;
     }
