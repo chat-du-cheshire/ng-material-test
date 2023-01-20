@@ -12,7 +12,7 @@ export class EmployeeMeta {
     readonly paidOverTime: number;
     private readonly dailyHours = new Map<string, number>();
 
-    constructor(private readonly employee: IEmployeeDto, timings: ITimingDto[]) {
+    constructor(employee: IEmployeeDto, timings: ITimingDto[]) {
         this.employeeId = employee.id;
         this.name = employee.name;
         this.email = employee.email;

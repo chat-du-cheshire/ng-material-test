@@ -31,7 +31,6 @@ export class StateService {
     }
 
     update(data: {employees: IEmployeeDto[]; timings: ITimingDto[]}) {
-        console.log(data);
         const newStorage = Storage.fromExisting(this.state.storage);
 
         data.employees.forEach(e => newStorage.updateEmployee(e));
